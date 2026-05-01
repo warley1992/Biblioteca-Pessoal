@@ -99,15 +99,45 @@ function listarPendentes(): string[] {
   return titulos.filter((_, i) => !lido[i]);
 }
 
+function totalLivros(): number {
+  return titulos.length;
+}
+
+function totalLidos(): number {
+  return lido.filter((status) => status).length;
+}
+
+function percentualLidos(): number {
+  if (totalLivros() === 0) return 0;
+  return (totalLidos() / totalLivros()) * 100;
+}
+
+function mediaAvaliacoes(): number {
+  const av = avaliacoes.filter((_, i) => lido[i]);
+  if (av.length === 0) return 0;
+  return av.reduce((acc, v) => acc + v, 0) / av.length;
+}
+
+function livroMaiorAvaliacao(): string {
+  const idx = titulos.reduce((m, _, a) => (avaliacoes[a] ?? 0) > (avaliacoes[m] ?? 0) ? a : m, 0);
+  return titulos[idx] ?? '';
+}
+
+function totalPaginasLidas(): number {
+  return paginas
+    .filter((_, i) => lido[i])
+    .reduce((soma, pag) => soma + pag, 0);
+}
+
 // Teste
 //exibirBiblioteca();
 
 // Teste
 marcarComoLido(2, 4);
-marcarComoLido(0, 6); // deve mostrar erro
 
-console.log('\nLivros lidos:');
-listarLidos().forEach((t) => console.log(`  - ${t}`));
-
-console.log('\nLivros pendentes:');
-listarPendentes().forEach((t) => console.log(`  - ${t}`));
+console.log('\n=== ESTATÍSTICAS ===');
+console.log(`Total de livros: ${totalLivros()}`);
+console.log(`Livros lidos: ${totalLidos()} (${percentualLidos().toFixed(2)}%)`);
+console.log(`Média das avaliações: ${mediaAvaliacoes().toFixed(2)}`);
+console.log(`Livro melhor avaliado: ${livroMaiorAvaliacao()}`);
+console.log(`Total de páginas lidas: ${totalPaginasLidas()}`);
