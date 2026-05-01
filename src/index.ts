@@ -61,12 +61,26 @@ function removerLivro(indice: number): void {
   console.log(`Livro "${tituloRemovido}" removido com sucesso!`);
 }
 
+function buscarPorTitulo(termo: string): number[] {
+  const resultado: number[] = [];
+  titulos.forEach((titulo, i) => {
+    if (titulo.toLowerCase().includes(termo.toLowerCase())) {
+      resultado.push(i);
+    }
+  });
+  return resultado;
+}
+
+function listarPorAutor(autor: string): string[] {
+  return titulos.filter((_, i) => (autores[i] ?? '').toLowerCase() === autor.toLowerCase());
+}
+
 // Teste
 //exibirBiblioteca();
 
 // Teste
-adicionarLivro('O Senhor dos Anéis', 'J.R.R. Tolkien', 1954, 1178);
-adicionarLivro('Inválido', 'Autor', -1, 300); // deve mostrar erro
-exibirBiblioteca();
-removerLivro(5);
-exibirBiblioteca();
+console.log('Buscando por "o":');
+buscarPorTitulo('o').forEach((i) => console.log(`  [${i}] ${titulos[i]}`));
+
+console.log('\nLivros de J.R.R. Tolkien:');
+listarPorAutor('J.R.R. Tolkien').forEach((t) => console.log(`  - ${t}`));
