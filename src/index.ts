@@ -129,15 +129,25 @@ function totalPaginasLidas(): number {
     .reduce((soma, pag) => soma + pag, 0);
 }
 
+function exibirPorDecada(): void {
+  console.log('\n=== POR DÉCADA ===');
+
+  const decadas: number[] = anos
+    .map((ano) => Math.floor(ano / 10) * 10)
+    .filter((decada, i, arr) => arr.indexOf(decada) === i)
+    .sort((a, b) => a - b);
+
+  decadas.forEach((decada) => {
+    const livrosDaDecada = titulos.filter((_, i) => Math.floor((anos[i] ?? 0) / 10) * 10 === decada);
+    console.log(`${decada}s: ${livrosDaDecada.join(', ')}`);
+  });
+
+  console.log('');
+}
+
 // Teste
 //exibirBiblioteca();
 
 // Teste
 marcarComoLido(2, 4);
-
-console.log('\n=== ESTATÍSTICAS ===');
-console.log(`Total de livros: ${totalLivros()}`);
-console.log(`Livros lidos: ${totalLidos()} (${percentualLidos().toFixed(2)}%)`);
-console.log(`Média das avaliações: ${mediaAvaliacoes().toFixed(2)}`);
-console.log(`Livro melhor avaliado: ${livroMaiorAvaliacao()}`);
-console.log(`Total de páginas lidas: ${totalPaginasLidas()}`);
+exibirPorDecada();
