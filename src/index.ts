@@ -23,5 +23,50 @@ function exibirBiblioteca(): void {
   console.log('');
 }
 
+function adicionarLivro(titulo: string, autor: string, ano: number, numeroPaginas: number): void {
+  if (ano <= 0) {
+    console.log('Erro: o ano deve ser maior que 0');
+    return;
+  }
+  if (numeroPaginas <= 0) {
+    console.log('Erro: o número de páginas deve ser maior que 0');
+    return;
+  }
+
+  titulos.push(titulo);
+  autores.push(autor);
+  anos.push(ano);
+  paginas.push(numeroPaginas);
+  lido.push(false);
+  avaliacoes.push(0);
+
+  console.log(`Livro "${titulo}" adicionado com sucesso!`);
+}
+
+function removerLivro(indice: number): void {
+  if (indice < 0 || indice >= titulos.length) {
+    console.log('Erro: índice inválido');
+    return;
+  }
+
+  const tituloRemovido = titulos[indice];
+
+  titulos.splice(indice, 1);
+  autores.splice(indice, 1);
+  anos.splice(indice, 1);
+  paginas.splice(indice, 1);
+  lido.splice(indice, 1);
+  avaliacoes.splice(indice, 1);
+
+  console.log(`Livro "${tituloRemovido}" removido com sucesso!`);
+}
+
 // Teste
+//exibirBiblioteca();
+
+// Teste
+adicionarLivro('O Senhor dos Anéis', 'J.R.R. Tolkien', 1954, 1178);
+adicionarLivro('Inválido', 'Autor', -1, 300); // deve mostrar erro
+exibirBiblioteca();
+removerLivro(5);
 exibirBiblioteca();
