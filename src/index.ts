@@ -75,12 +75,39 @@ function listarPorAutor(autor: string): string[] {
   return titulos.filter((_, i) => (autores[i] ?? '').toLowerCase() === autor.toLowerCase());
 }
 
+function marcarComoLido(indice: number, avaliacao: number): void {
+  if (indice < 0 || indice >= titulos.length) {
+    console.log('Erro: índice inválido');
+    return;
+  }
+  if (avaliacao < 1 || avaliacao > 5) {
+    console.log('Erro: a avaliação deve ser entre 1 e 5');
+    return;
+  }
+
+  lido[indice] = true;
+  avaliacoes[indice] = avaliacao;
+
+  console.log(`"${titulos[indice]}" marcado como lido com avaliação ${avaliacao}/5!`);
+}
+
+function listarLidos(): string[] {
+  return titulos.filter((_, i) => lido[i]);
+}
+
+function listarPendentes(): string[] {
+  return titulos.filter((_, i) => !lido[i]);
+}
+
 // Teste
 //exibirBiblioteca();
 
 // Teste
-console.log('Buscando por "o":');
-buscarPorTitulo('o').forEach((i) => console.log(`  [${i}] ${titulos[i]}`));
+marcarComoLido(2, 4);
+marcarComoLido(0, 6); // deve mostrar erro
 
-console.log('\nLivros de J.R.R. Tolkien:');
-listarPorAutor('J.R.R. Tolkien').forEach((t) => console.log(`  - ${t}`));
+console.log('\nLivros lidos:');
+listarLidos().forEach((t) => console.log(`  - ${t}`));
+
+console.log('\nLivros pendentes:');
+listarPendentes().forEach((t) => console.log(`  - ${t}`));
