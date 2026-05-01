@@ -145,9 +145,47 @@ function exibirPorDecada(): void {
   console.log('');
 }
 
-// Teste
-//exibirBiblioteca();
+// =============================================================
+// DEMONSTRAÇÃO FINAL
+// =============================================================
+
+console.log('='.repeat(50));
+console.log('       GERENCIADOR DE BIBLIOTECA PESSOAL');
+console.log('='.repeat(50));
+
+exibirBiblioteca();
+
+console.log('>>> Adicionando livros...');
+adicionarLivro('O Senhor dos Anéis', 'J.R.R. Tolkien', 1954, 1178);
+adicionarLivro('Inválido', 'Autor', -1, 300);
+console.log('');
+
+console.log('>>> Marcando "1984" como lido com avaliação 4...');
+marcarComoLido(2, 4);
+console.log('');
+
+console.log('>>> Buscando por "o":');
+buscarPorTitulo('o').forEach((i) => console.log(`  [${i}] ${titulos[i]}`));
+console.log('');
+
+console.log('>>> Livros de J.R.R. Tolkien:');
+listarPorAutor('J.R.R. Tolkien').forEach((t) => console.log(`  - ${t}`));
+console.log('');
+
+console.log('>>> Livros lidos:');
+listarLidos().forEach((t) => console.log(`  - ${t}`));
+
+console.log('\n>>> Livros pendentes:');
+listarPendentes().forEach((t) => console.log(`  - ${t}`));
+
+console.log('\n=== ESTATÍSTICAS ===');
+console.log(`Total de livros: ${totalLivros()}`);
+console.log(`Livros lidos: ${totalLidos()} (${percentualLidos().toFixed(2)}%)`);
+console.log(`Média das avaliações: ${mediaAvaliacoes().toFixed(2)}`);
+console.log(`Livro melhor avaliado: ${livroMaiorAvaliacao()}`);
+console.log(`Total de páginas lidas: ${totalPaginasLidas()}`);
+
+exibirPorDecada();
 
 // Teste
-marcarComoLido(2, 4);
-exibirPorDecada();
+exibirBiblioteca();
